@@ -44,7 +44,7 @@ class UsersService:
     
     async def connexion(self,user:connexion):
         result = await self.db.execute(
-            select(Users).where(Users, email ==user.email)
+            select(Users).where(Users.email == user.email)
             
         )
         Users_db = result.scalar_one_or_none()
@@ -56,7 +56,7 @@ class UsersService:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="password not found please try again")
             
             
-        token_access = create_token ({"sub : str(users_db.id)"})
+        token_access = token_access ({"sub : str(users_db.id)"})
         return{"access_token":token_access}
         
 

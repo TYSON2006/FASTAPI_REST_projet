@@ -10,7 +10,7 @@ token_time_access = 10
 
 
 def create_token(data:dict, expire_delta:timedelta|None=None) -> str:
-    to-encode = data.copy()
+    to_encode = data.copy()
     expire = datetime.now(timezone.utc)+ (
         expire_delta or timedelta(minutes=token_time_access)
     )

@@ -1,4 +1,4 @@
-from fastapi.security import OAuth2AuthorizationCodeBearer 
+from fastapi.security import OAuth2PasswordBearer 
 from fastapi import Depends,HTTPException,status
 import jwt 
 from typing import Annotated
@@ -9,7 +9,7 @@ from sqlalchemy import select
 
 
 
-oauth2_scheme = OAuth2AuthorizationCodeBearer(tokenUrl="users/connexion")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/connexion")
 
 
 async def get_current_user(token:Annotated[str,Depends(oauth2_scheme)],db:db_dependency) -> Users:

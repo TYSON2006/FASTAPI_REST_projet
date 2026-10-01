@@ -30,24 +30,20 @@ class TaskServies:
             logger.info("task insert successfully")
             return nouvelle_taches
             
-        
-        async def get_all_task(self,user_id:int):
-            
-            result = await  self.db.execute(
-                select(CreateTasksValidation).where(CreateTasksValidation.user_id == user_id)
-            )
-            
-            
-            task = result.scalar_one_or_one()
-            if task is None:
-                raise HTTPException(status_code=404,detail="task not found please try again")
-            return task
-        
-        
+                
+        async def get_all_tasks(self, user_id: int, completed: bool | None = None, priorities: str | None = None):
+            query = select(Tasks).where(Tasks.user_id == user_id)
+            if completed is not None:
+                query = query.where(Tasks.completed == completed)
+            if priorities is not None:
+                query = query.where(Tasks.priorities ==priorities)
+            result = await self.db.execute(query)
+            return result.scalars().all()
+                
         
         async def update_all_task(self,user_id:int,body_task:CreateTasksValidation):
             
-            result = await self.db.execute(select(CreateTasksValidation).where(CreateTasksValidation.user_id ==user_id,CreateTasksValidation.id == task_id) )
+            result = await self.db.execute(select(CreateTasksValidation).where(CreateTasksValidation.user_id ==user_id,CreateTasksValidation.id == task) )
                                          
                                           
             
@@ -84,7 +80,7 @@ class TaskServies:
             return task
         
         async def filter_task(self,user_id:int ,status:bool):
-            result = await self.db.execute(select(CreateTasksValidation).where(CreateTasksValidation.user_id ==user_id,CreateTasksValidation.id ==task_id))
+            result = await self.db.execute(select(CreateTasksValidation).where(CreateTasksValidation.user_id ==user_id,CreateTasksValidation.id ==task))
             
             task = result.scalar.all()
             

@@ -10,7 +10,7 @@ load_dotenv()
 
 URL = os.getenv("DATABASE_URL")
 
-engine = create_async_engine(URL, echo=True)
+engine = create_async_engine(URL, echo=True,connect_args={"ssl ":True})
 
 AsyncSessionLocal = async_sessionmaker(
     engine, class_=AsyncSession, expire_on_commit=False
