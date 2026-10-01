@@ -6,7 +6,7 @@ class UserCreateValidation(BaseModel):
     name : str = Field(min_length=3,max_length=50)
     last_name : str = Field(min_length=3,max_length=50)
     email : EmailStr = Field (min_length=3,max_length=50)
-    password :  str = Field(min_length=10)
+    password :  str = Field(min_length=5)
         
         
 

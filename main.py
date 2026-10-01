@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routes.users import users_rooter
+from routes.users import   users_router
 from db.data_base import init_db
 
 
@@ -15,4 +15,4 @@ async def on_startup():
 
 
 
-app.include_router(users_rooter)
+app.include_router(users_router)

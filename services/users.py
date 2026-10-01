@@ -1,4 +1,5 @@
 from shema.users import UserLogin,UserCreateValidation
+from core.sécurity import hash_password
 from models._models_users import Users
 from db.data_base import db_dependency
 from fastapi import HTTPException,status
@@ -7,7 +8,7 @@ from sqlalchemy import select
 from pwdlib import PasswordHash
 
 
-pwd_context = PasswordHash.recommended() 
+
 
 
 class UsersService:
@@ -21,7 +22,7 @@ class UsersService:
         if utlisation_exite:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT,detail="please try again")
         
-        password_hash = pwd_context.hash(body_user.password)
+        password_hash =hash_password.hash(body_user.password)
         
         
         nouvel_utilisateur = Users(
@@ -48,7 +49,7 @@ class UsersService:
         )
         Users_db = result.scalar_one_or_none()
         print(Users_db)
-        if not Users_db or not pwd_context.verify(
+        if not Users_db or not hash_password.verify(
             user.password,
             Users_db.password
         ):

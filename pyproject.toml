@@ -15,6 +15,7 @@ dependencies = [
     "loguru>=0.7.3",
     "pg>=0.1",
     "pwdlib[argon2]>=0.3.1",
+    "pyjwt>=2.15.1",
     "sqlalchemy>=2.1.0",
 ]
 
