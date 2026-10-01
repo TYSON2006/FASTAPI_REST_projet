@@ -8,9 +8,9 @@ from sqlalchemy.orm import DeclarativeBase
 
 load_dotenv()
 
-URL = os.getenv("DATABASE_URL")
+URL = os.getenv("DATABASE_URL","").strip().set(drivername = "postgresql+asyncpg",query = {})
 
-engine = create_async_engine(URL, echo=True,connect_args={"ssl ":True})
+engine = create_async_engine(URL, echo=True,connect_args={"ssl":True})
 
 AsyncSessionLocal = async_sessionmaker(
     engine, class_=AsyncSession, expire_on_commit=False
